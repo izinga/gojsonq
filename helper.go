@@ -89,7 +89,8 @@ func toFloat64(v interface{}) (float64, bool) {
 	case float64:
 		f = u
 	case string:
-		f, err := strconv.ParseFloat(VersionOrdinal(v.(string)), 64)
+		var err error
+		f, err = strconv.ParseFloat(VersionOrdinal(v.(string)), 64)
 		if err == nil {
 			flag = false
 		}
