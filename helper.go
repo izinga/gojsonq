@@ -37,6 +37,37 @@ func toString(v interface{}) string {
 	return fmt.Sprintf("%v", v)
 }
 
+// VersionOrdinal convert string to version
+func VersionOrdinal(version string) interface{} {
+	// ISO/IEC 14651:2011
+	const maxByte = 1<<8 - 1
+	vo := make([]byte, 0, len(version)+8)
+	j := -1
+	for i := 0; i < len(version); i++ {
+		b := version[i]
+		if '0' > b || b > '9' {
+			vo = append(vo, b)
+			j = -1
+			continue
+		}
+		if j == -1 {
+			vo = append(vo, 0x00)
+			j = len(vo) - 1
+		}
+		if vo[j] == 1 && vo[j+1] == '0' {
+			vo[j+1] = b
+			continue
+		}
+		if vo[j]+1 > maxByte {
+			// panic("VersionOrdinal: invalid version")
+		}
+		vo = append(vo, b)
+		vo[j]++
+	}
+
+	return string(vo)
+}
+
 // toFloat64 converts interface{} value to float64 if value is numeric else return false
 func toFloat64(v interface{}) (float64, bool) {
 	var f float64
@@ -57,9 +88,16 @@ func toFloat64(v interface{}) (float64, bool) {
 		f = float64(u)
 	case float64:
 		f = u
+	case string:
+		f = VersionOrdinal(u)
+		f, err := strconv.ParseFloat(VersionOrdinal(u), 64)
+		if err == nil {
+			flag = false
+		}
 	default:
 		flag = false
 	}
+
 	return f, flag
 }
 
