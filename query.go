@@ -73,7 +73,10 @@ func eq(x, y interface{}) (bool, error) {
 	if fv, ok := toFloat64(y); ok {
 		y = fv
 	}
-	return reflect.DeepEqual(x, y), nil
+	a = fmt.Sprintf("%v", x)
+	b = fmt.Sprintf("%v", y)
+	return reflect.DeepEqual(a, b), nil
+
 }
 
 // neq checks whether x, y are deeply not equal
@@ -92,7 +95,10 @@ func gt(x, y interface{}) (bool, error) {
 	if fv, ok := toFloat64(y); ok {
 		return xv > fv, nil
 	}
-	return false, nil
+	a := fmt.Sprintf("%v", x)
+	b := fmt.Sprintf("%v", y)
+	return a > b, nil
+
 }
 
 // lt checks whether x is less than y
@@ -105,7 +111,9 @@ func lt(x, y interface{}) (bool, error) {
 	if fv, ok := toFloat64(y); ok {
 		return xv < fv, nil
 	}
-	return false, nil
+	a := fmt.Sprintf("%v", x)
+	b := fmt.Sprintf("%v", y)
+	return a < b, nil
 }
 
 // gte checks whether x is greater than or equal to y
@@ -118,7 +126,9 @@ func gte(x, y interface{}) (bool, error) {
 	if fv, ok := toFloat64(y); ok {
 		return xv >= fv, nil
 	}
-	return false, nil
+	a := fmt.Sprintf("%v", x)
+	b := fmt.Sprintf("%v", y)
+	return a >= b, nil
 }
 
 // lte checks whether x is less than or equal to y
@@ -131,7 +141,10 @@ func lte(x, y interface{}) (bool, error) {
 	if fv, ok := toFloat64(y); ok {
 		return xv <= fv, nil
 	}
-	return false, nil
+	a := fmt.Sprintf("%v", x)
+	b := fmt.Sprintf("%v", y)
+	return a <= b, nil
+
 }
 
 // strStrictContains checks if x contains y
