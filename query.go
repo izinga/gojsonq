@@ -73,8 +73,8 @@ func eq(x, y interface{}) (bool, error) {
 	if fv, ok := toFloat64(y); ok {
 		y = fv
 	}
-	a = fmt.Sprintf("%v", x)
-	b = fmt.Sprintf("%v", y)
+	a := fmt.Sprintf("%v", x)
+	b := fmt.Sprintf("%v", y)
 	return reflect.DeepEqual(a, b), nil
 
 }
