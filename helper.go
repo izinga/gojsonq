@@ -38,7 +38,7 @@ func toString(v interface{}) string {
 }
 
 // VersionOrdinal convert string to version
-func VersionOrdinal(version string) interface{} {
+func VersionOrdinal(version string) string {
 	// ISO/IEC 14651:2011
 	const maxByte = 1<<8 - 1
 	vo := make([]byte, 0, len(version)+8)
@@ -89,7 +89,7 @@ func toFloat64(v interface{}) (float64, bool) {
 	case float64:
 		f = u
 	case string:
-		f, err := strconv.ParseFloat(VersionOrdinal(u), 64)
+		f, err := strconv.ParseFloat(VersionOrdinal(v.(string)), 64)
 		if err == nil {
 			flag = false
 		}
