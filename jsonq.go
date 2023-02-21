@@ -305,7 +305,6 @@ func (j *JSONQ) findInMap(vm map[string]interface{}) []interface{} {
 								nv = f
 							}
 						}
-
 					}
 				}
 				// fmt.Println("jsonq We are comparing ", nv, q.value)
