@@ -6,6 +6,9 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"reflect"
+	"strconv"
+	"strings"
 )
 
 // New returns a new instance of JSONQ
@@ -290,6 +293,19 @@ func (j *JSONQ) findInMap(vm map[string]interface{}) []interface{} {
 				j.addError(errnv)
 				andPassed = false
 			} else {
+				// change to type of data
+				if reflect.TypeOf(nv) != reflect.TypeOf(q.value) {
+					if reflect.TypeOf(nv).String() == "float64" {
+						if item, ok := q.value.(string); ok {
+							// q.value = VersionOrdinal(item) //TODO check how it working for string
+							f, err := strconv.ParseFloat(VersionOrdinal(item), 64)
+							if err == nil {
+								q.value = f
+							}
+						}
+
+					}
+				}
 				qb, err := cf(nv, q.value)
 				if err != nil {
 					j.addError(err)
@@ -735,4 +751,13 @@ func (j *JSONQ) Max(property ...string) float64 {
 		}
 	}
 	return max
+}
+
+// VersionOrdinal convert string to version
+func VersionOrdinal(version string) string {
+	if strings.Contains(version, ".") {
+		temp := strings.Split(version, ".")
+		return fmt.Sprintf("%s.%s", temp[0], strings.Join(temp[0:], ""))
+	}
+	return version
 }
