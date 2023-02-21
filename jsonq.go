@@ -278,6 +278,7 @@ func (j *JSONQ) findInArray(aa []interface{}) []interface{} {
 // findInMap traverses through a map and returns the matched value list.
 // This helps to process Where/OrWhere queries
 func (j *JSONQ) findInMap(vm map[string]interface{}) []interface{} {
+	// fmt.Println("jsonq calling findInMap")
 	result := make([]interface{}, 0)
 	orPassed := false
 	for _, qList := range j.queries {
@@ -295,19 +296,19 @@ func (j *JSONQ) findInMap(vm map[string]interface{}) []interface{} {
 			} else {
 				// change to type of data
 				if reflect.TypeOf(nv) != reflect.TypeOf(q.value) {
-					fmt.Println("We go float comparision")
-					if reflect.TypeOf(nv).String() == "float64" {
-						if item, ok := q.value.(string); ok {
+					// fmt.Println("jsonq We go float comparision")
+					if reflect.TypeOf(q.value).String() == "float64" {
+						if item, ok := nv.(string); ok {
 							// q.value = VersionOrdinal(item) //TODO check how it working for string
 							f, err := strconv.ParseFloat(VersionOrdinal(item), 64)
 							if err == nil {
-								q.value = f
+								nv = f
 							}
 						}
 
 					}
 				}
-				fmt.Println("We are comparing ", nv, q.value)
+				// fmt.Println("jsonq We are comparing ", nv, q.value)
 				qb, err := cf(nv, q.value)
 				if err != nil {
 					j.addError(err)
