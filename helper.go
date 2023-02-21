@@ -39,8 +39,11 @@ func toString(v interface{}) string {
 
 // VersionOrdinal convert string to version
 func VersionOrdinal(version string) string {
-	temp := strings.Split(version, ".")
-	return fmt.Sprintf("%s.%s", temp[0], strings.Join(temp[0:], ""))
+	if strings.Contains(version, ".") {
+		temp := strings.Split(version, ".")
+		return fmt.Sprintf("%s.%s", temp[0], strings.Join(temp[0:], ""))
+	}
+	return version
 }
 
 // toFloat64 converts interface{} value to float64 if value is numeric else return false
