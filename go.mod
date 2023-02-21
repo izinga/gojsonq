@@ -1,3 +1,3 @@
-module github.com/izinga/gojsonq/v2
+module github.com/izinga/gojsonq
 
 go 1.13
