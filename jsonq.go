@@ -295,6 +295,7 @@ func (j *JSONQ) findInMap(vm map[string]interface{}) []interface{} {
 			} else {
 				// change to type of data
 				if reflect.TypeOf(nv) != reflect.TypeOf(q.value) {
+					fmt.Println("We go float comparision")
 					if reflect.TypeOf(nv).String() == "float64" {
 						if item, ok := q.value.(string); ok {
 							// q.value = VersionOrdinal(item) //TODO check how it working for string
@@ -306,6 +307,7 @@ func (j *JSONQ) findInMap(vm map[string]interface{}) []interface{} {
 
 					}
 				}
+				fmt.Println("We are comparing ", nv, q.value)
 				qb, err := cf(nv, q.value)
 				if err != nil {
 					j.addError(err)
