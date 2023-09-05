@@ -755,8 +755,12 @@ func (j *JSONQ) Max(property ...string) float64 {
 	return max
 }
 
-// VersionOrdinal convert string to version
+
+
 func VersionOrdinal(version string) string {
-	temp := strings.Split(version, ".")
-	return fmt.Sprintf("%s.%s", temp[0], strings.Join(temp[0:], ""))
+	temp := strings.Split(version, ".")    
+	if len(temp) > 1 {        
+		return fmt.Sprintf("%s.%s", temp[0], strings.Join(temp[1:], ""))    
+	}    
+	return version
 }
